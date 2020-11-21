@@ -54,25 +54,14 @@ class model():
     
     def fit(self, data, epochs):
         for e in range(epochs):
-            # Forward pass: compute predicted y by passing x to the model. Module objects
-            # override the __call__ operator so you can call them like functions. When
-            # doing so you pass a Tensor of input data to the Module and it produces
-            # a Tensor of output data.
+            
             for xb,yb in data.train_dl:
                 y_pred = self.basic(xb)
 
-                # Compute and print loss. We pass Tensors containing the predicted and true
-                # values of y, and the loss function returns a Tensor containing the
-                # loss.
                 loss = self.loss_func(y_pred, yb)
                 
-                # Zero the gradients before running the backward pass.
                 self.basic.zero_grad()
 
-                # Backward pass: compute gradient of the loss with respect to all the learnable
-                # parameters of the model. Internally, the parameters of each Module are stored
-                # in Tensors with requires_grad=True, so this call will compute gradients for
-                # all learnable parameters in the model.
                 loss.backward()
                 self.opt.step()
                 self.opt.zero_grad()
